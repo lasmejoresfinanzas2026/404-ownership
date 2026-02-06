@@ -36,12 +36,12 @@ button {
   border: 1px solid #444;
 }
 </style>
-
 </head>
+
 <body>
 
 <div class="container">
-  <p>This 404 already belongs to someone.</p>
+  <p id="message"></p>
   <p>You are seeing error #<span id="num"></span></p>
 
   <button onclick="go404()">Claim this 404</button><br>
@@ -52,12 +52,25 @@ button {
 const errorNumber = Math.floor(Math.random() * 100000);
 document.getElementById("num").innerText = errorNumber;
 
+const messages = [
+  "This 404 escaped.",
+  "This 404 was almost yours.",
+  "Someone bought a 404 recently.",
+  "You arrived too late.",
+  "This 404 is unstable.",
+  "Ownership pending.",
+  "Another human claimed nearby."
+];
+
+document.getElementById("message").innerText =
+  messages[Math.floor(Math.random() * messages.length)];
+
 function go404() {
   window.location.href = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002?error=" + errorNumber;
 }
 
 function goSecond() {
-  window.location.href = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002?second=" + Date.now();
+  window.location.href = "https://buy.stripe.com/aFa00jaQyfEJ1i61NNco000";
 }
 </script>
 
