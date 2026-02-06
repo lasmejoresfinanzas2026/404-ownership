@@ -1,34 +1,45 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>404 Not Found</title>
 
 <style>
-body {
+html, body {
   margin: 0;
-  height: 100vh;
+  padding: 0;
+  height: 100%;
   background: #000;
   color: #fff;
   font-family: monospace;
+}
+
+body {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-header {
+/* Header */
+.header {
   margin-top: 40px;
+  text-align: center;
+}
+
+.header h1 {
   font-size: 48px;
-  letter-spacing: 4px;
-  color: #888;
+  letter-spacing: 6px;
+  color: #9a9a9a;
+  margin: 0;
 }
 
-.sub {
-  margin-top: 5px;
-  color: #444;
+.header p {
+  margin-top: 10px;
   font-size: 14px;
+  color: #555;
 }
 
+/* Main content */
 .container {
   flex: 1;
   display: flex;
@@ -38,85 +49,96 @@ header {
   text-align: center;
 }
 
+.container p {
+  margin: 8px 0;
+  font-size: 16px;
+}
+
+/* Buttons */
 button {
-  margin-top: 15px;
-  padding: 12px 26px;
+  margin-top: 20px;
+  padding: 12px 28px;
+  font-family: monospace;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.primary {
   background: #fff;
   color: #000;
   border: none;
-  cursor: pointer;
-  font-size: 14px;
 }
 
-.small {
+.secondary {
   background: transparent;
   color: #aaa;
   border: 1px solid #444;
 }
 
-.stats {
-  color:#555;
-  font-size:12px;
-  margin-top:20px;
+/* Footer info */
+.footer {
+  margin-bottom: 40px;
+  text-align: center;
+  font-size: 13px;
+  color: #555;
 }
 </style>
 </head>
 
 <body>
 
-<header>404 NOT FOUND</header>
-<div class="sub">server responded with anomaly</div>
+<div class="header">
+  <h1>404 NOT FOUND</h1>
+  <p>server responded with anomaly</p>
+</div>
 
 <div class="container">
-  <p id="message"></p>
+  <p id="msg">System instability detected.</p>
   <p>You are seeing error #<span id="num"></span></p>
 
-  <button onclick="go404()">Claim this 404</button><br>
-  <button class="small" onclick="goSecond()">Buy one second</button>
+  <button class="primary" onclick="goToStripe()">
+    Claim this 404
+  </button>
 
-  <div id="stats" class="stats"></div>
+  <button class="secondary" onclick="goToStripe()">
+    Buy one second
+  </button>
+</div>
+
+<div class="footer">
+  <p>Last activity: <span id="last"></span> seconds ago</p>
+  <p>404 interactions on this device: <span id="count"></span></p>
 </div>
 
 <script>
-let errorNumber = localStorage.getItem("error");
-
-if(!errorNumber){
-  errorNumber = Math.floor(Math.random() * 100000);
-  localStorage.setItem("error", errorNumber);
-}
-
-document.getElementById("num").innerText = errorNumber;
-
-let owned = localStorage.getItem("owned") || 0;
-
 const messages = [
   "System instability detected.",
   "Another human claimed nearby.",
   "Ownership collision.",
-  "Temporal drift detected.",
-  "This 404 escaped.",
-  "You arrived too late."
+  "Temporal desync detected.",
+  "This 404 is unstable."
 ];
 
-document.getElementById("message").innerText =
-  owned > 0 ? "You already touched this system." :
-  messages[Math.floor(Math.random() * messages.length)];
+const errorNumber = Math.floor(Math.random() * 100000);
+document.getElementById("num").innerText = errorNumber;
 
-const activity = Math.floor(Math.random() * 60) + 3;
+let msgIndex = Math.floor(Math.random() * messages.length);
+const msgElement = document.getElementById("msg");
+msgElement.innerText = messages[msgIndex];
 
-document.getElementById("stats").innerText =
-  "Last activity: " + activity + " seconds ago\n404 interactions on this device: " + owned;
+setInterval(() => {
+  msgIndex = (msgIndex + 1) % messages.length;
+  msgElement.innerText = messages[msgIndex];
+}, 4000);
 
-function go404() {
-  localStorage.setItem("owned", ++owned);
-  window.location.href = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002?error=" + errorNumber;
-}
+document.getElementById("last").innerText = Math.floor(Math.random() * 60) + 1;
+document.getElementById("count").innerText = 0;
 
-function goSecond() {
-  window.location.href = "https://buy.stripe.com/aFa00jaQyfEJ1i61NNco000";
+function goToStripe() {
+  window.location.href =
+    "https://buy.stripe.com/aFa00jaQyfEJ1i61NNco000?error=" + errorNumber;
 }
 </script>
 
 </body>
 </html>
-
