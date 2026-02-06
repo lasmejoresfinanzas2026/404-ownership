@@ -17,30 +17,29 @@ body {
 }
 
 header {
-  margin-top: 40px;
-  font-size: 48px;
-  letter-spacing: 4px;
-  color: #888;
+  margin-top: 120px;
+  font-size: 64px;
+  letter-spacing: 8px;
+  color: #999;
 }
 
 .sub {
-  margin-top: 5px;
+  margin-top: 10px;
   color: #444;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .container {
-  flex: 1;
+  margin-top: 120px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-align: center;
 }
 
 button {
-  margin-top: 15px;
-  padding: 12px 26px;
+  margin-top: 18px;
+  padding: 12px 28px;
   background: #fff;
   color: #000;
   border: none;
@@ -51,13 +50,14 @@ button {
 .small {
   background: transparent;
   color: #aaa;
-  border: 1px solid #444;
+  border: 1px solid #333;
 }
 
 .stats {
-  color:#555;
+  color:#444;
   font-size:12px;
-  margin-top:20px;
+  margin-top:22px;
+  line-height:1.6;
 }
 </style>
 </head>
@@ -102,7 +102,7 @@ document.getElementById("message").innerText =
   owned > 0 ? "You already touched this system." :
   messages[Math.floor(Math.random() * messages.length)];
 
-const activity = Math.floor(Math.random() * 60) + 3;
+const activity = Math.floor(Math.random() * 60) + 10;
 
 document.getElementById("stats").innerText =
   "Last activity: " + activity + " seconds ago\n404 interactions on this device: " + owned;
