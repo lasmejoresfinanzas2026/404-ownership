@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>This 404 belongs to someone</title>
+
 <style>
 body {
   margin: 0;
@@ -14,9 +15,11 @@ body {
   color: #fff;
   font-family: monospace;
 }
+
 .container {
   text-align: center;
 }
+
 button {
   margin-top: 20px;
   padding: 10px 20px;
@@ -26,8 +29,10 @@ button {
   cursor: pointer;
 }
 </style>
+
 </head>
 <body>
+
 <div class="container">
   <p>This 404 already belongs to someone.</p>
   <p>You are seeing error #<span id="num"></span></p>
@@ -38,5 +43,6 @@ button {
 document.getElementById("num").innerText =
   Math.floor(Math.random() * 100000);
 </script>
+
 </body>
 </html>
