@@ -21,12 +21,19 @@ body {
 }
 
 button {
-  margin-top: 20px;
-  padding: 10px 20px;
+  margin-top: 15px;
+  padding: 10px 22px;
   background: #fff;
   color: #000;
   border: none;
   cursor: pointer;
+  font-size: 14px;
+}
+
+.small {
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #444;
 }
 </style>
 
@@ -37,17 +44,20 @@ button {
   <p>This 404 already belongs to someone.</p>
   <p>You are seeing error #<span id="num"></span></p>
 
-  <button onclick="goToStripe()">
-    Claim this 404
-  </button>
+  <button onclick="go404()">Claim this 404</button><br>
+  <button class="small" onclick="goSecond()">Buy one second</button>
 </div>
 
 <script>
 const errorNumber = Math.floor(Math.random() * 100000);
 document.getElementById("num").innerText = errorNumber;
 
-function goToStripe() {
+function go404() {
   window.location.href = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002?error=" + errorNumber;
+}
+
+function goSecond() {
+  window.location.href = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002?second=" + Date.now();
 }
 </script>
 
