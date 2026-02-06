@@ -46,35 +46,42 @@ button {
 
   <button onclick="go404()">Claim this 404</button><br>
   <button class="small" onclick="goSecond()">Buy one second</button>
+
+  <p id="stats" style="color:#666;font-size:12px;margin-top:20px"></p>
 </div>
 
 <script>
-const errorNumber = Math.floor(Math.random() * 100000);
+let errorNumber = localStorage.getItem("error");
+
+if(!errorNumber){
+  errorNumber = Math.floor(Math.random() * 100000);
+  localStorage.setItem("error", errorNumber);
+}
+
 document.getElementById("num").innerText = errorNumber;
+
+let owned = localStorage.getItem("owned") || 0;
 
 const messages = [
   "This 404 escaped.",
   "This 404 was almost yours.",
-  "Someone bought a 404 recently.",
-  "You arrived too late.",
-  "This 404 is unstable.",
+  "Someone bought nearby.",
   "Ownership pending.",
+  "System instability detected.",
   "Another human claimed nearby."
 ];
 
 document.getElementById("message").innerText =
+  owned > 0 ? "You already touched this system." :
   messages[Math.floor(Math.random() * messages.length)];
 
 const activity = Math.floor(Math.random() * 60) + 3;
 
-const activityLine = document.createElement("p");
-activityLine.style.color = "#777";
-activityLine.style.fontSize = "12px";
-activityLine.innerText = "Last activity: " + activity + " seconds ago";
-
-document.querySelector(".container").appendChild(activityLine);
+document.getElementById("stats").innerText =
+  "Last activity: " + activity + " seconds ago\n404 interactions on this device: " + owned;
 
 function go404() {
+  localStorage.setItem("owned", ++owned);
   window.location.href = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002?error=" + errorNumber;
 }
 
@@ -85,3 +92,4 @@ function goSecond() {
 
 </body>
 </html>
+
