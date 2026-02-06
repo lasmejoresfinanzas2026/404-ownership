@@ -39,7 +39,7 @@ body {
   color: #555;
 }
 
-/* Main content */
+/* Main */
 .container {
   flex: 1;
   display: flex;
@@ -75,7 +75,7 @@ button {
   border: 1px solid #444;
 }
 
-/* Footer info */
+/* Footer */
 .footer {
   margin-bottom: 40px;
   text-align: center;
@@ -93,50 +93,81 @@ button {
 </div>
 
 <div class="container">
-  <p id="msg">System instability detected.</p>
+  <p id="msg"></p>
   <p>You are seeing error #<span id="num"></span></p>
 
-  <button class="primary" onclick="goToStripe()">
+  <button class="primary" onclick="go404()">
     Claim this 404
   </button>
 
-  <button class="secondary" onclick="goToStripe()">
+  <button class="secondary" onclick="goSecond()">
     Buy one second
   </button>
 </div>
 
 <div class="footer">
   <p>Last activity: <span id="last"></span> seconds ago</p>
-  <p>404 interactions on this device: <span id="count"></span></p>
+  <p>Interactions on this device: <span id="count"></span></p>
 </div>
 
 <script>
-const messages = [
+// ---- SYSTEM MEMORY ----
+let visits = Number(localStorage.getItem("visits") || 0) + 1;
+localStorage.setItem("visits", visits);
+
+// persistent error id per device
+let errorNumber = localStorage.getItem("error_id");
+if (!errorNumber) {
+  errorNumber = Math.floor(Math.random() * 100000);
+  localStorage.setItem("error_id", errorNumber);
+}
+
+// ---- DYNAMIC CONTENT ----
+const baseMessages = [
   "System instability detected.",
-  "Another human claimed nearby.",
-  "Ownership collision.",
-  "Temporal desync detected.",
+  "Ownership collision detected.",
+  "Temporal desync increasing.",
+  "Another entity claimed nearby.",
+  "Resource allocation fluctuating.",
   "This 404 is unstable."
 ];
 
-const errorNumber = Math.floor(Math.random() * 100000);
-document.getElementById("num").innerText = errorNumber;
+const rareMessages = [
+  "CRITICAL: ownership window collapsing.",
+  "WARNING: temporal boundary reached.",
+  "ERROR: duplicate claim detected."
+];
+
+// rare event chance
+const useRare = Math.random() < 0.08;
+
+const messages = useRare ? rareMessages : baseMessages;
 
 let msgIndex = Math.floor(Math.random() * messages.length);
-const msgElement = document.getElementById("msg");
-msgElement.innerText = messages[msgIndex];
+const msgEl = document.getElementById("msg");
+msgEl.innerText = messages[msgIndex];
 
+// rotate messages slowly
 setInterval(() => {
   msgIndex = (msgIndex + 1) % messages.length;
-  msgElement.innerText = messages[msgIndex];
-}, 4000);
+  msgEl.innerText = messages[msgIndex];
+}, 4500);
 
-document.getElementById("last").innerText = Math.floor(Math.random() * 60) + 1;
-document.getElementById("count").innerText = 0;
+// ---- FOOTER DATA ----
+document.getElementById("num").innerText = errorNumber;
+document.getElementById("last").innerText =
+  Math.floor(Math.random() * 90) + 5;
+document.getElementById("count").innerText = visits;
 
-function goToStripe() {
+// ---- ACTIONS ----
+function go404() {
   window.location.href =
-    "https://buy.stripe.com/aFa00jaQyfEJ1i61NNco000?error=" + errorNumber;
+    "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002?error=" + errorNumber;
+}
+
+function goSecond() {
+  window.location.href =
+    "https://buy.stripe.com/aFa00jaQyfEJ1i61NNco000";
 }
 </script>
 
