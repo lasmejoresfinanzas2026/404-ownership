@@ -37,14 +37,18 @@ button {
   <p>This 404 already belongs to someone.</p>
   <p>You are seeing error #<span id="num"></span></p>
 
-  <button onclick="window.location.href='https://buy.stripe.com/9B600j5we505f8W1NNco001'">
+  <button onclick="goToStripe()">
     Claim this 404
   </button>
 </div>
 
 <script>
-document.getElementById("num").innerText =
-  Math.floor(Math.random() * 100000);
+const errorNumber = Math.floor(Math.random() * 100000);
+document.getElementById("num").innerText = errorNumber;
+
+function goToStripe() {
+  window.location.href = "https://buy.stripe.com/9B600j5we505f8W1NNco001?error=" + errorNumber;
+}
 </script>
 
 </body>
