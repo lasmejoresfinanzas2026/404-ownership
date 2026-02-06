@@ -65,6 +65,15 @@ const messages = [
 document.getElementById("message").innerText =
   messages[Math.floor(Math.random() * messages.length)];
 
+const activity = Math.floor(Math.random() * 60) + 3;
+
+const activityLine = document.createElement("p");
+activityLine.style.color = "#777";
+activityLine.style.fontSize = "12px";
+activityLine.innerText = "Last activity: " + activity + " seconds ago";
+
+document.querySelector(".container").appendChild(activityLine);
+
 function go404() {
   window.location.href = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002?error=" + errorNumber;
 }
