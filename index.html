@@ -1,179 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>404 Not Found</title>
+<meta charset="UTF-8">
+<title>404 Not Found</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #000;
+  color: #eaeaea;
+  font-family: monospace;
+}
 
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #000;
-      color: #eaeaea;
-      font-family: monospace;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .wrapper {
-      text-align: center;
-      width: 100%;
-    }
+.wrapper {
+  text-align: center;
+  max-width: 720px;
+  padding: 20px;
+}
 
-    .title {
-      font-size: 64px;
-      letter-spacing: 8px;
-      color: #9a9a9a;
-      margin-bottom: 10px;
-    }
+h1 {
+  font-size: 64px;
+  letter-spacing: 8px;
+  color: #9a9a9a;
+  margin-bottom: 10px;
+}
 
-    .subtitle {
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 60px;
-    }
+.sub {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 60px;
+}
 
-    .message {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
+.message {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
 
-    .error-id {
-      font-size: 14px;
-      margin-bottom: 30px;
-    }
+.error {
+  font-size: 14px;
+  margin-bottom: 40px;
+}
 
-    button {
-      display: block;
-      margin: 12px auto;
-      padding: 12px 26px;
-      font-size: 14px;
-      cursor: pointer;
-      font-family: monospace;
-      transition: all 0.2s ease;
-    }
+button {
+  display: block;
+  width: 300px;
+  margin: 12px auto;
+  padding: 14px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: monospace;
+  transition: all 0.2s ease;
+}
 
-    .primary {
-      background: #fff;
-      color: #000;
-      border: none;
-    }
+.primary {
+  background: #fff;
+  color: #000;
+  border: none;
+}
 
-    .primary:hover {
-      background: #ddd;
-    }
+.primary:hover {
+  background: #ddd;
+}
 
-    .secondary {
-      background: transparent;
-      color: #aaa;
-      border: 1px solid #444;
-    }
+.secondary {
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #333;
+}
 
-    .secondary:hover {
-      border-color: #777;
-      color: #fff;
-    }
+.secondary:hover {
+  color: #fff;
+  border-color: #666;
+}
 
-    .footer {
-      margin-top: 60px;
-      font-size: 12px;
-      color: #555;
-      line-height: 1.6;
-    }
-  </style>
+.footer {
+  margin-top: 60px;
+  font-size: 12px;
+  color: #555;
+  line-height: 1.6;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="wrapper">
+<div class="wrapper">
 
-    <div class="title">404 NOT FOUND</div>
-    <div class="subtitle">server responded with anomaly</div>
+  <h1>404 NOT FOUND</h1>
+  <div class="sub">server responded with anomaly</div>
 
-    <div class="message" id="dynamicMessage"></div>
-    <div class="error-id">You are seeing error #<span id="errorId"></span></div>
-
-    <button class="primary" onclick="claim404()">Claim this 404</button>
-    <button class="secondary" onclick="buySecond()">Buy one second</button>
-
-    <div class="footer">
-      Last activity: <span id="lastActivity"></span><br />
-      Interactions on this device: <span id="interactionCount"></span>
-    </div>
-
+  <div class="message" id="dynamicMessage"></div>
+  <div class="error">
+    You are seeing error #<span id="errorId"></span>
   </div>
 
-  <script>
-    // ===============================
-    // CONFIG
-    // ===============================
-    const STRIPE_404_URL = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002";
-    const STRIPE_SECOND_URL = "https://buy.stripe.com/aFa00jaQyfEJ1i61NNco000";
+  <button class="primary" onclick="claim404()">
+    Claim this 404 error (Premium)
+  </button>
 
-    const messages = [
-      "Another entity claimed nearby.",
-      "Ownership collision detected.",
-      "Temporal desync increasing.",
-      "System instability detected.",
-      "Claim conflict unresolved."
-    ];
+  <button class="secondary" onclick="buySecond()">
+    Interact with this 404 error (1 second)
+  </button>
 
-    // ===============================
-    // ERROR ID
-    // ===============================
-    const errorId = Math.floor(Math.random() * 90000) + 10000;
-    document.getElementById("errorId").textContent = errorId;
+  <div class="footer">
+    Last activity: <span id="lastActivity"></span><br>
+    Interactions on this device: <span id="interactionCount"></span>
+  </div>
 
-    // ===============================
-    // RANDOM MESSAGE
-    // ===============================
-    const message =
-      messages[Math.floor(Math.random() * messages.length)];
-    document.getElementById("dynamicMessage").textContent = message;
+</div>
 
-    // ===============================
-    // INTERACTIONS
-    // ===============================
-    let interactions =
-      parseInt(localStorage.getItem("interactions")) || 0;
-    interactions++;
-    localStorage.setItem("interactions", interactions);
-    document.getElementById("interactionCount").textContent = interactions;
+<script>
+/* ===============================
+   CONFIG
+================================ */
+const STRIPE_404_URL = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002";
+const STRIPE_SECOND_URL = "https://buy.stripe.com/aFa00jaQyfEJ1i61NNco000";
 
-    // ===============================
-    // LAST ACTIVITY
-    // ===============================
-    const now = Date.now();
-    const last = localStorage.getItem("lastActivity");
+/* ===============================
+   ERROR ID
+================================ */
+const errorId = Math.floor(Math.random() * 90000) + 10000;
+document.getElementById("errorId").textContent = errorId;
 
-    if (last) {
-      const secondsAgo = Math.floor((now - last) / 1000);
-      document.getElementById("lastActivity").textContent =
-        secondsAgo + " seconds ago";
-    } else {
-      document.getElementById("lastActivity").textContent = "never";
-    }
+/* ===============================
+   SYSTEM MESSAGES (SYSTEM LIVES)
+================================ */
+const messages = [
+  "Another entity claimed nearby.",
+  "Ownership collision detected.",
+  "Temporal desync increasing.",
+  "System instability detected.",
+  "Residual ownership traces found.",
+  "Memory state degraded."
+];
 
-    localStorage.setItem("lastActivity", now);
+document.getElementById("dynamicMessage").textContent =
+  messages[Math.floor(Math.random() * messages.length)];
 
-    // ===============================
-    // ACTIONS
-    // ===============================
-    function claim404() {
-      window.location.href =
-        STRIPE_404_URL + "?error=" + errorId;
-    }
+/* ===============================
+   INTERACTIONS (LOCAL SYSTEM STATE)
+================================ */
+let interactions = parseInt(localStorage.getItem("interactions") || "0");
+interactions++;
+localStorage.setItem("interactions", interactions);
+document.getElementById("interactionCount").textContent = interactions;
 
-    function buySecond() {
-      window.location.href =
-        STRIPE_SECOND_URL + "?error=" + errorId;
-    }
-  </script>
+/* ===============================
+   LAST ACTIVITY
+================================ */
+const now = Date.now();
+const last = localStorage.getItem("lastActivity");
+
+if (last) {
+  const secondsAgo = Math.floor((now - last) / 1000);
+  document.getElementById("lastActivity").textContent =
+    secondsAgo + " seconds ago";
+} else {
+  document.getElementById("lastActivity").textContent = "never";
+}
+
+localStorage.setItem("lastActivity", now);
+
+/* ===============================
+   ACTIONS
+================================ */
+function claim404() {
+  window.location.href =
+    STRIPE_404_URL + "?error=" + errorId;
+}
+
+function buySecond() {
+  window.location.href =
+    STRIPE_SECOND_URL + "?error=" + errorId;
+}
+</script>
 
 </body>
 </html>
