@@ -22,7 +22,7 @@ body {
 
 .wrapper {
   text-align: center;
-  max-width: 760px;
+  max-width: 720px;
   padding: 20px;
 }
 
@@ -30,29 +30,29 @@ h1 {
   font-size: 64px;
   letter-spacing: 8px;
   color: #9a9a9a;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
-.subtitle {
-  font-size: 13px;
+.sub {
+  font-size: 14px;
   color: #555;
-  margin-bottom: 70px;
+  margin-bottom: 60px;
 }
 
-.core {
-  font-size: 16px;
-  margin-bottom: 18px;
+.message {
+  font-size: 18px;
+  margin-bottom: 8px;
 }
 
 .error {
   font-size: 14px;
-  margin: 40px 0 60px 0;
+  margin-bottom: 40px;
 }
 
 button {
   display: block;
-  width: 320px;
-  margin: 14px auto;
+  width: 300px;
+  margin: 12px auto;
   padding: 14px;
   font-size: 14px;
   cursor: pointer;
@@ -82,10 +82,10 @@ button {
 }
 
 .footer {
-  margin-top: 80px;
+  margin-top: 60px;
   font-size: 12px;
   color: #555;
-  line-height: 1.7;
+  line-height: 1.6;
 }
 </style>
 </head>
@@ -95,18 +95,11 @@ button {
 <div class="wrapper">
 
   <h1>404 NOT FOUND</h1>
-  <div class="subtitle">server responded with anomaly</div>
+  <div class="sub">server responded with anomaly</div>
 
-  <div class="core">
-    Ownership collision detected in this region.
-  </div>
-
-  <div class="core">
-    This request could not be resolved.
-  </div>
-
+  <div class="message" id="dynamicMessage"></div>
   <div class="error">
-    You are currently viewing error #<span id="errorId"></span>
+    You are seeing error #<span id="errorId"></span>
   </div>
 
   <button class="primary" onclick="claim404()">
@@ -118,9 +111,6 @@ button {
   </button>
 
   <div class="footer">
-    Some 404 errors can be claimed. Others remain unowned.<br>
-    Ownership does not fix the error. It only changes how the system remembers it.
-    <br><br>
     Last activity: <span id="lastActivity"></span><br>
     Interactions on this device: <span id="interactionCount"></span>
   </div>
@@ -131,13 +121,8 @@ button {
 /* ===============================
    CONFIG
 ================================ */
-
-// 🔴 ESTE ES EL ÚNICO CAMBIO 🔴
-// Enlace de 0,50 €
-const STRIPE_404_URL = "https://buy.stripe.com/4gMbJ1bUC2RX9OCbonco003";
-
-// Enlace de “1 second” (SIN CAMBIOS)
-const STRIPE_SECOND_URL = "https://buy.stripe.com/aFa00jaQyfEJ1i61NNco000";
+const STRIPE_404_URL = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002";
+const STRIPE_SECOND_URL = "https://buy.stripe.com/4gMbJ1bUC2RX9OCbonco003";
 
 /* ===============================
    ERROR ID
@@ -146,7 +131,22 @@ const errorId = Math.floor(Math.random() * 90000) + 10000;
 document.getElementById("errorId").textContent = errorId;
 
 /* ===============================
-   INTERACTIONS
+   SYSTEM MESSAGES (SYSTEM LIVES)
+================================ */
+const messages = [
+  "Another entity claimed nearby.",
+  "Ownership collision detected.",
+  "Temporal desync increasing.",
+  "System instability detected.",
+  "Residual ownership traces found.",
+  "Memory state degraded."
+];
+
+document.getElementById("dynamicMessage").textContent =
+  messages[Math.floor(Math.random() * messages.length)];
+
+/* ===============================
+   INTERACTIONS (LOCAL SYSTEM STATE)
 ================================ */
 let interactions = parseInt(localStorage.getItem("interactions") || "0");
 interactions++;
