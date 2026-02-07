@@ -99,15 +99,15 @@ button {
 
   <div class="message" id="dynamicMessage"></div>
   <div class="error">
-    You are seeing error #<span id="errorId"></span>
+    This page has been registered as error #<span id="errorId"></span>
   </div>
 
   <button class="primary" onclick="claim404()">
-    Claim this 404 error (Premium)
+    Claim permanent ownership of this 404 (Premium)
   </button>
 
   <button class="secondary" onclick="buySecond()">
-    Interact with this 404 error (1 second)
+    Interact with this 404 for 1 second
   </button>
 
   <div class="footer">
@@ -125,25 +125,10 @@ const STRIPE_404_URL = "https://buy.stripe.com/28EeVd6Aiakp8Ky0JJco002";
 const STRIPE_SECOND_URL = "https://buy.stripe.com/4gMbJ1bUC2RX9OCbonco003";
 
 /* ===============================
-   ERROR ID
+   ERROR ID (REGISTERED INSTANCE)
 ================================ */
 const errorId = Math.floor(Math.random() * 90000) + 10000;
 document.getElementById("errorId").textContent = errorId;
-
-/* ===============================
-   SYSTEM MESSAGES (SYSTEM LIVES)
-================================ */
-const messages = [
-  "Another entity claimed nearby.",
-  "Ownership collision detected.",
-  "Temporal desync increasing.",
-  "System instability detected.",
-  "Residual ownership traces found.",
-  "Memory state degraded."
-];
-
-document.getElementById("dynamicMessage").textContent =
-  messages[Math.floor(Math.random() * messages.length)];
 
 /* ===============================
    INTERACTIONS (LOCAL SYSTEM STATE)
@@ -152,6 +137,29 @@ let interactions = parseInt(localStorage.getItem("interactions") || "0");
 interactions++;
 localStorage.setItem("interactions", interactions);
 document.getElementById("interactionCount").textContent = interactions;
+
+/* ===============================
+   SYSTEM MESSAGES (ADAPTIVE)
+================================ */
+const firstVisitMessages = [
+  "Unregistered anomaly detected.",
+  "New error instance observed.",
+  "This error has not been claimed.",
+  "An unowned 404 has surfaced."
+];
+
+const repeatedVisitMessages = [
+  "Repeated access detected.",
+  "This error has already been observed.",
+  "Residual interaction traces found.",
+  "System notes continued attention."
+];
+
+const messages =
+  interactions > 1 ? repeatedVisitMessages : firstVisitMessages;
+
+document.getElementById("dynamicMessage").textContent =
+  messages[Math.floor(Math.random() * messages.length)];
 
 /* ===============================
    LAST ACTIVITY
